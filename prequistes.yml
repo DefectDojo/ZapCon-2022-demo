@@ -1,0 +1,28 @@
+---
+version: '3.7'
+services:
+  juice-shop:
+    image: bkimminich/juice-shop
+    restart: unless-stopped
+    container_name: juice-shop
+    ports:
+      - target: 3000
+        published: 3000
+        protocol: tcp
+    networks:
+      - pipeline-network
+  defectdojo:
+    image: 10security/defectdojo:2022-02-14
+    restart: unless-stopped
+    container_name: defectdojo
+    ports:
+      - target: 8888
+        published: 8888
+        protocol: tcp
+        mode: host
+    networks:
+      - pipeline-network
+
+networks:
+  pipeline-network:
+    driver: bridge

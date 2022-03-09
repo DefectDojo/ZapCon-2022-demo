@@ -1,0 +1,34 @@
+---
+version: '3.7'
+services:
+  zap:
+    image: owasp/zap2docker-stable:s2022-02-01
+    container_name: zap
+    user: root
+    networks:
+      - zapcon-2022-demo_pipeline-network
+    volumes:
+      - type: bind
+        source: ./tools/
+        target: /zap/wrk
+      - scan_data:/opt/reports
+    entrypoint: ["/zap/wrk/zap/zap.bash"]
+  sslyze:
+    image: nablac0d3/sslyze:sha-d46120a
+    container_name: sslyze
+    user: root
+    networks:
+      - zapcon-2022-demo_pipeline-network
+    volumes:
+      - type: bind
+        source: ./tools/
+        target: /app/tools
+      - scan_data:/opt/reports
+    entrypoint: ["/app/tools/sslyze/sslyze.bash"]
+    
+networks:
+  zapcon-2022-demo_pipeline-network:
+    external: True
+
+volumes:
+  scan_data: {}

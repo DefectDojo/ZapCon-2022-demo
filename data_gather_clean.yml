@@ -1,0 +1,21 @@
+---
+version: '3.7'
+services:
+  dojo_import:
+    image: python
+    container_name: dojo_import
+    networks:
+      - zapcon-2022-demo_pipeline-network
+    volumes:
+      - type: bind
+        source: ./tools/
+        target: /app/tools
+      - scan_data:/opt/reports
+    entrypoint: ["/app/tools/defectdojo/defectdojo.bash"]
+
+networks:
+  zapcon-2022-demo_pipeline-network:
+    external: True
+
+volumes:
+  scan_data: {}
