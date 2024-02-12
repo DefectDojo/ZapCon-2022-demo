@@ -2,7 +2,7 @@
 version: '3.7'
 services:
   zap:
-    image: owasp/zap2docker-stable:s2022-02-01
+    image: ghcr.io/zaproxy/zaproxy:stable
     container_name: zap
     user: root
     networks:
